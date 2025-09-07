@@ -34,7 +34,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".IncomingCallActivity"
+            android:name=".ui.screens.incomingcall.IncomingCallActivity"
             android:excludeFromRecents="true"
             android:exported="true"
             android:launchMode="singleTask"
@@ -43,14 +43,19 @@
             android:theme="@style/Theme.InAppCalling"
             android:turnScreenOn="true" />
         <activity
-            android:name=".OngoingCallActivity"
+            android:name=".ui.screens.ongoingcall.OngoingCallActivity"
             android:exported="false"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.InAppCalling" />
+        <activity
+            android:name="com.jkv.in_appcalling.ui.screens.auth.FingerprintAuthForCallActivity"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.InAppCalling" />
 
         <receiver
-            android:name=".CallNotificationActionReceiver"
+            android:name=".ui.notification.CallNotificationActionReceiver"
             android:exported="false" />
     </application>
 

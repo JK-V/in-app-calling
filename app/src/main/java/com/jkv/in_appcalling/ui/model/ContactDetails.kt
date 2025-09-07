@@ -1,16 +1,14 @@
-package com.jkv.in_appcalling
+package com.jkv.in_appcalling.ui.model
 
-// Potentially in a data model file
 data class ContactDetails(
     val id: String,
     val name: String,
     val phoneNumber: String,
-    val avatarResId: Int, // Drawable resource ID for the avatar
+    val avatarResId: Int,
     val email: String? = null,
     val address: String? = null
 )
 
-// Simplified for now, can be expanded for actual call logs
 data class CallLogItem(
     val id: String,
     val type: String, // e.g., "Outgoing", "Incoming", "Missed"

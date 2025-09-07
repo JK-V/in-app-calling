@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "In-App Calling"
+rootProject.name = "InAppCalling"
 include(":app")
  

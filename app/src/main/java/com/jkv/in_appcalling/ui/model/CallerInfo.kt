@@ -1,4 +1,4 @@
-package com.jkv.in_appcalling
+package com.jkv.in_appcalling.ui.model
 
 data class CallerInfo(
     val name: String,

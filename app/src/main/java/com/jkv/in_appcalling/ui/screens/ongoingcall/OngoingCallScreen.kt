@@ -1,4 +1,4 @@
-package com.jkv.in_appcalling
+package com.jkv.in_appcalling.ui.screens.ongoingcall
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,21 +29,23 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jkv.in_appcalling.R
+import com.jkv.in_appcalling.ui.model.CallerInfo
+import com.jkv.in_appcalling.ui.screens.incomingcall.CallActionButton
 import com.jkv.in_appcalling.ui.theme.InAppCallingTheme
 import kotlinx.coroutines.delay
 import java.util.concurrent.TimeUnit
 
 @Composable
 fun OngoingCallScreen(
-    callerInfo: CallerInfo, // You'll pass this from IncomingCallActivity
+    callerInfo: CallerInfo,
     onHangUp: () -> Unit
 ) {
     var callDurationSeconds by remember { mutableStateOf(0L) }
 
-    // Timer logic
-    LaunchedEffect(key1 = Unit) { // Starts when the composable enters the composition
+    LaunchedEffect(key1 = Unit) {
         while (true) {
-            delay(1000) // delay for 1 second
+            delay(1000)
             callDurationSeconds++
         }
     }
@@ -62,7 +64,7 @@ fun OngoingCallScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.surfaceVariant) // Different background for ongoing call
+            .background(MaterialTheme.colorScheme.surfaceVariant)
     ) {
         Column(
             modifier = Modifier
@@ -71,7 +73,6 @@ fun OngoingCallScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            // Caller Info and Timer (Top/Center)
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.weight(1f),
@@ -92,22 +93,20 @@ fun OngoingCallScreen(
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = callerInfo.number,
+                    text = "Ongoing voice call ",
                     style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = formattedDuration,
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.primary
                 )
-                Text(text = "Ongoing Call", style = MaterialTheme.typography.labelMedium)
             }
 
-            // Call Controls (Bottom)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -115,27 +114,24 @@ fun OngoingCallScreen(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Example: Mute Button
-                CallActionButton( // Reusing the button from IncomingCallScreen
-                    iconResId = R.drawable.mic_on_icon, // replace with actual mic icon
+                CallActionButton(
+                    iconResId = R.drawable.mic_on_icon,
                     label = "Mute",
-                    onClick = { /* TODO: Handle Mute */ },
+                    onClick = { },
                     buttonColor = MaterialTheme.colorScheme.secondary,
                     iconColor = MaterialTheme.colorScheme.onSecondary
                 )
 
-                // Example: Speaker Button
                 CallActionButton(
-                    iconResId = R.drawable.speaker_on_icon, // replace with actual speaker icon
+                    iconResId = R.drawable.speaker_on_icon,
                     label = "Speaker",
-                    onClick = { /* TODO: Handle Speaker */ },
+                    onClick = { },
                     buttonColor = MaterialTheme.colorScheme.secondary,
                     iconColor = MaterialTheme.colorScheme.onSecondary
                 )
 
-                // Hang Up Button
                 CallActionButton(
-                    iconResId = R.drawable.call_decline_icon, // Using decline icon for hang up
+                    iconResId = R.drawable.call_decline_icon,
                     label = "Hang Up",
                     onClick = onHangUp,
                     buttonColor = MaterialTheme.colorScheme.error,
@@ -145,9 +141,6 @@ fun OngoingCallScreen(
         }
     }
 }
-
-// You might need to create R.drawable.mic_on_icon and R.drawable.speaker_on_icon
-// or use existing ones. The CallActionButton is assumed to be defined as in previous examples.
 
 @Preview(showBackground = true, widthDp = 360, heightDp = 780)
 @Composable
@@ -159,12 +152,3 @@ fun OngoingCallScreenPreview() {
         )
     }
 }
-
-// ---- IMPORTANT ----
-// Ensure you have these (or similarly named) drawable resources in res/drawable:
-// - default_avatar.xml (or .png, .jpg for the contact image)
-// - mic_on_icon.xml (Vector Drawable for microphone on)
-// - mic_off_icon.xml (Vector Drawable for microphone off)
-// - speaker_on_icon.xml (Vector Drawable for speaker on)
-// - speaker_off_icon.xml (Vector Drawable for speaker off)
-// - call_end_icon.xml (Vector Drawable for ending a call)

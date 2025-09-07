@@ -1,4 +1,4 @@
-package com.jkv.in_appcalling
+package com.jkv.in_appcalling.ui.screens.callingprofile
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -18,16 +18,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jkv.in_appcalling.ui.model.CallLogItem
+import com.jkv.in_appcalling.ui.model.ContactDetails
+import com.jkv.in_appcalling.R
 import com.jkv.in_appcalling.ui.theme.InAppCallingTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CallingProfileScreen(
     contact: ContactDetails,
-    callHistory: List<CallLogItem>, // Pass a list of call log items
-    onCall: (String) -> Unit,       // Callback for call action, passes phone number
-    onMessage: (String) -> Unit,    // Callback for message action, passes phone number
-    onNavigateBack: () -> Unit      // Callback for back navigation
+    callHistory: List<CallLogItem>,
+    onCall: (String) -> Unit,
+    onMessage: (String) -> Unit,
+    onNavigateBack: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -36,7 +39,7 @@ fun CallingProfileScreen(
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(
-                            imageVector = Icons.Filled.ArrowBack, // Using a standard Material Icon
+                            imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "Back"
                         )
                     }
@@ -48,12 +51,11 @@ fun CallingProfileScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(horizontal = 16.dp), // Add horizontal padding for content
+                .padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
-                Spacer(modifier = Modifier.height(16.dp)) // Top spacing
-                // Avatar
+                Spacer(modifier = Modifier.height(16.dp))
                 Image(
                     painter = painterResource(id = contact.avatarResId),
                     contentDescription = "${contact.name} Avatar",
@@ -61,11 +63,10 @@ fun CallingProfileScreen(
                         .size(120.dp)
                         .clip(CircleShape)
                         .background(MaterialTheme.colorScheme.secondaryContainer),
-                    contentScale = ContentScale.Crop // Or ContentScale.Fit if your avatars vary
+                    contentScale = ContentScale.Crop
                 )
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Name
                 Text(
                     text = contact.name,
                     style = MaterialTheme.typography.headlineSmall,
@@ -73,7 +74,6 @@ fun CallingProfileScreen(
                 )
                 Spacer(modifier = Modifier.height(4.dp))
 
-                // Phone Number
                 Text(
                     text = contact.phoneNumber,
                     style = MaterialTheme.typography.titleMedium,
@@ -81,7 +81,6 @@ fun CallingProfileScreen(
                 )
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // Action Buttons
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
@@ -99,7 +98,6 @@ fun CallingProfileScreen(
                 Spacer(modifier = Modifier.height(24.dp))
             }
 
-            // Additional Details Section
             item {
                 Text(
                     text = "Details",
@@ -121,9 +119,7 @@ fun CallingProfileScreen(
                     ProfileDetailItem(label = "Address", value = contact.address)
                 }
             }
-            // Add more details as needed
 
-            // Call History Section
             if (callHistory.isNotEmpty()) {
                 item {
                     Spacer(modifier = Modifier.height(16.dp))
@@ -141,7 +137,7 @@ fun CallingProfileScreen(
                 }
             }
             item {
-                Spacer(modifier = Modifier.height(16.dp)) // Bottom spacing
+                Spacer(modifier = Modifier.height(16.dp))
             }
         }
     }
@@ -159,7 +155,7 @@ fun ProfileDetailItem(label: String, value: String) {
             text = label,
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.weight(0.4f) // Adjust weight as needed
+            modifier = Modifier.weight(0.4f)
         )
         Text(
             text = value,
@@ -207,15 +203,14 @@ fun CallHistoryItemRow(logItem: CallLogItem) {
     }
 }
 
-@Preview(showBackground = true, widthDp = 360, heightDp = 780) // Adjusted height for more content
+@Preview(showBackground = true, widthDp = 360, heightDp = 780)
 @Composable
 fun CallingProfileScreenPreview() {
-    // Sample data for the preview
     val sampleContact = ContactDetails(
         id = "1",
         name = "Jane Doe",
         phoneNumber = "+1 (123) 456-7890",
-        avatarResId = R.drawable.default_avatar, // Ensure this drawable exists
+        avatarResId = R.drawable.default_avatar,
         email = "jane.doe@example.com",
         address = "123 Main St, Anytown, USA"
     )
@@ -242,16 +237,14 @@ fun CallingProfileScreenPreview() {
         )
     )
 
-    InAppCallingTheme { // Replace NewSwaaleTheme with your actual theme name
+    InAppCallingTheme {
         CallingProfileScreen(
             contact = sampleContact,
             callHistory = sampleCallHistory,
             onCall = { phoneNumber ->
-                // In a real app, you'd log this or trigger a call intent
                 println("Preview: Call initiated to $phoneNumber")
             },
             onMessage = { phoneNumber ->
-                // In a real app, you'd log this or trigger a message intent
                 println("Preview: Message initiated to $phoneNumber")
             },
             onNavigateBack = {

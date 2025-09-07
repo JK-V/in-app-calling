@@ -1,4 +1,4 @@
-package com.jkv.in_appcalling
+package com.jkv.in_appcalling.ui.notification
 
 import android.app.NotificationManager
 import android.content.BroadcastReceiver
@@ -8,7 +8,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresPermission
 
-// Dummy BroadcastReceiver to handle notification actions
 class CallNotificationActionReceiver : BroadcastReceiver() {
     @RequiresPermission("android.permission.BROADCAST_CLOSE_SYSTEM_DIALOGS")
     override fun onReceive(context: Context, intent: Intent) {
@@ -18,19 +17,11 @@ class CallNotificationActionReceiver : BroadcastReceiver() {
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         when (intent.action) {
-            // ACTION_ANSWER_CALL is now handled by starting an Activity.
-            // If you still need some background processing for answer via BroadcastReceiver
-            // (e.g., before launching UI), you could keep it, but it's less common.
-
             ACTION_DECLINE_CALL -> {
                 Log.d("CallNotification", "Declined call from $callerName (via BroadcastReceiver)")
                 Toast.makeText(context, "Call from $callerName declined", Toast.LENGTH_SHORT).show()
-                // TODO: Handle actual call decline logic (e.g., inform server, telephony stack)
-                notificationManager.cancel(INCOMING_CALL_NOTIFICATION_ID) // Dismiss notification
+                notificationManager.cancel(INCOMING_CALL_NOTIFICATION_ID)
             }
         }
-        // Optionally close the notification shade if it's still open
-        // val closeIntent = Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
-        // context.sendBroadcast(closeIntent)
     }
 }
